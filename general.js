@@ -1,14 +1,14 @@
-// Aurora Signer - General Animation Controller
+
 
 class OrbController {
     constructor() {
         this.orbs = [];
         this.maxOrbs = 12;
         this.orbTypes = [
-            { color: '#ef4444', size: 300, speed: 0.5 }, // Red orbs
-            { color: '#3b82f6', size: 400, speed: 0.3 }, // Blue orbs
-            { color: '#ef4444', size: 350, speed: 0.4 }, // Additional red orbs
-            { color: '#3b82f6', size: 450, speed: 0.2 }  // Additional blue orbs
+            { color: '#ef4444', size: 300, speed: 0.5 },
+            { color: '#3b82f6', size: 400, speed: 0.3 }, 
+            { color: '#ef4444', size: 350, speed: 0.4 }, 
+            { color: '#3b82f6', size: 450, speed: 0.2 }  
         ];
         this.init();
     }
@@ -20,17 +20,14 @@ class OrbController {
     }
 
     createOrbs() {
-        // Remove existing orbs from CSS
         this.removeCSSOrbs();
         
-        // Create dynamic orbs
         for (let i = 0; i < this.maxOrbs; i++) {
             this.createOrb(i);
         }
     }
 
     removeCSSOrbs() {
-        // Remove the CSS pseudo-elements by overriding them
         const style = document.createElement('style');
         style.textContent = `
             body::before, body::after {
@@ -58,10 +55,8 @@ class OrbController {
             transition: all 0.5s ease;
         `;
 
-        // Set initial position
         this.setRandomPosition(orb);
-        
-        // Store orb data
+
         this.orbs.push({
             element: orb,
             type: type,
@@ -86,11 +81,10 @@ class OrbController {
 
     animate() {
         this.orbs.forEach((orb, index) => {
-            // Update position
+
             orb.x += orb.vx;
             orb.y += orb.vy;
 
-            // Bounce off walls
             if (orb.x <= 0 || orb.x >= window.innerWidth - orb.type.size) {
                 orb.vx *= -1;
             }
@@ -98,18 +92,14 @@ class OrbController {
                 orb.vy *= -1;
             }
 
-            // Keep orbs within bounds
             orb.x = Math.max(0, Math.min(window.innerWidth - orb.type.size, orb.x));
             orb.y = Math.max(0, Math.min(window.innerHeight - orb.type.size, orb.y));
 
-            // Update life and dissipate
             orb.life -= orb.dissipateRate;
             
             if (orb.life <= 0) {
-                // Recreate orb
                 this.recreateOrb(index);
             } else {
-                // Update opacity based on life
                 const opacity = 0.3 * orb.life;
                 orb.element.style.opacity = opacity;
                 orb.element.style.transform = `translate(${orb.x}px, ${orb.y}px) scale(${0.8 + orb.life * 0.4})`;
@@ -122,19 +112,16 @@ class OrbController {
     recreateOrb(index) {
         const orb = this.orbs[index];
         const type = this.orbTypes[index % this.orbTypes.length];
-        
-        // Reset orb properties
+
         orb.life = orb.maxLife;
         orb.dissipateRate = 0.001 + Math.random() * 0.002;
         orb.vx = (Math.random() - 0.5) * type.speed;
         orb.vy = (Math.random() - 0.5) * type.speed;
-        
-        // Set new random position
+
         this.setRandomPosition(orb.element);
         orb.x = parseFloat(orb.element.style.left);
         orb.y = parseFloat(orb.element.style.top);
-        
-        // Reset opacity
+
         orb.element.style.opacity = 0.3;
         orb.element.style.transform = 'translate(0px, 0px) scale(1)';
     }
@@ -148,7 +135,6 @@ class OrbController {
             mouseY = e.clientY;
         });
 
-        // Add subtle mouse influence to orbs
         setInterval(() => {
             this.orbs.forEach(orb => {
                 const dx = mouseX - orb.x;
@@ -164,7 +150,6 @@ class OrbController {
         }, 50);
     }
 
-    // Public methods for external control
     addOrb() {
         if (this.orbs.length < this.maxOrbs + 2) {
             this.createOrb(this.orbs.length);
@@ -204,7 +189,6 @@ class GlassMorphismController {
     }
 
     applyGlassMorphism() {
-        // Add glass morphism styles
         const glassStyles = document.createElement('style');
         glassStyles.textContent = `
             .glass-container {
@@ -269,7 +253,6 @@ class GlassMorphismController {
     }
 
     addGlassEffects() {
-        // Apply glass morphism to containers
         const containers = [
             '.split-container',
             '.modifications-container',
@@ -285,13 +268,11 @@ class GlassMorphismController {
             });
         });
 
-        // Apply glass morphism to modifications menu specifically
         const modificationsMenu = document.querySelectorAll('.modifications-menu');
         modificationsMenu.forEach(element => {
             element.classList.add('glass-container');
         });
 
-        // Apply glass morphism to navbar elements
         const navbarElements = [
             '.hamburger-menu',
             '.nav-icon',
@@ -305,44 +286,37 @@ class GlassMorphismController {
             });
         });
 
-        // Apply glass morphism to buttons
         const buttons = document.querySelectorAll('button');
         buttons.forEach(button => {
             button.classList.add('glass-button');
         });
 
-        // Apply glass morphism to inputs
         const inputs = document.querySelectorAll('input');
         inputs.forEach(input => {
             input.classList.add('glass-input');
         });
 
-        // Apply glass morphism to file buttons
         const fileButtons = document.querySelectorAll('.file-button');
         fileButtons.forEach(button => {
             button.classList.add('glass-button');
         });
 
-        // Apply glass morphism to password input container
         const passwordInputs = document.querySelectorAll('.password-input input');
         passwordInputs.forEach(input => {
             input.classList.add('glass-input');
         });
 
-        // Apply glass morphism to modification inputs
         const modificationInputs = document.querySelectorAll('.modification-input, .modification-file');
         modificationInputs.forEach(input => {
             input.classList.add('glass-input');
         });
     }
 
-    // Method to refresh glass effects for dynamically added elements
     refreshGlassEffects() {
         this.addGlassEffects();
     }
 }
 
-// Navbar Handler
 class NavbarHandler {
     constructor() {
         this.hamburgerMenu = document.getElementById('hamburgerMenu');
@@ -362,21 +336,18 @@ class NavbarHandler {
     }
 
     setupEventListeners() {
-        // Hamburger menu toggle
         if (this.hamburgerMenu) {
             this.hamburgerMenu.addEventListener('click', () => {
                 this.toggleNav();
             });
         }
 
-        // Close nav button
         if (this.closeNav) {
             this.closeNav.addEventListener('click', () => {
                 this.closeNavigation();
             });
         }
 
-        // Close nav when clicking outside
         document.addEventListener('click', (e) => {
             if (this.navContainer && this.navContainer.classList.contains('open')) {
                 if (!this.navContainer.contains(e.target) && !this.hamburgerMenu.contains(e.target)) {
@@ -385,22 +356,19 @@ class NavbarHandler {
             }
         });
 
-        // Close nav on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.navContainer && this.navContainer.classList.contains('open')) {
                 this.closeNavigation();
             }
         });
 
-        // Sign in button
-        if (this.signInButton) {
+        if (this.signInButton && !window.location.pathname.includes('signer.html')) {
             this.signInButton.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.handleSignInClick();
             });
         }
 
-        // Dev panel button
         if (this.devPanelButton) {
             this.devPanelButton.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -408,7 +376,6 @@ class NavbarHandler {
             });
         }
 
-        // Smooth scrolling for nav links
         const navLinks = document.querySelectorAll('.nav-menu a');
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
@@ -425,8 +392,7 @@ class NavbarHandler {
     toggleNav() {
         if (this.navContainer) {
             this.navContainer.classList.toggle('open');
-            
-            // Animate hamburger menu
+
             if (this.hamburgerMenu) {
                 const spans = this.hamburgerMenu.querySelectorAll('span');
                 if (this.navContainer.classList.contains('open')) {
@@ -445,8 +411,7 @@ class NavbarHandler {
     closeNavigation() {
         if (this.navContainer) {
             this.navContainer.classList.remove('open');
-            
-            // Reset hamburger menu
+
             if (this.hamburgerMenu) {
                 const spans = this.hamburgerMenu.querySelectorAll('span');
                 spans[0].style.transform = 'none';
@@ -481,8 +446,7 @@ class NavbarHandler {
                 }
             }
         }
-        
-        // Show dev panel button for dev users
+ 
         if (user.isDev && this.devPanelButton) {
             this.devPanelButton.classList.remove('hidden');
         }
@@ -497,14 +461,12 @@ class NavbarHandler {
     handleSignInClick() {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser) {
-            // Sign out
             if (confirm('Are you sure you want to sign out?')) {
                 localStorage.removeItem('currentUser');
                 this.showSignInButton();
                 this.showNotification('Signed out successfully', 'success');
             }
         } else {
-            // Show auth popup
             const authPopup = document.getElementById('authPopup');
             if (authPopup) {
                 authPopup.classList.remove('hidden');
@@ -518,7 +480,6 @@ class NavbarHandler {
         if (adminPanel) {
             adminPanel.classList.toggle('hidden');
             if (!adminPanel.classList.contains('hidden')) {
-                // Load users when opening admin panel
                 if (typeof loadUsers === 'function') {
                     loadUsers();
                 }
@@ -537,7 +498,7 @@ class NavbarHandler {
     }
 
     showNotification(message, type = 'info') {
-        // Remove any existing notifications
+
         const existingNotifications = document.querySelectorAll('.notifications-popup');
         existingNotifications.forEach(notification => notification.remove());
 
@@ -573,7 +534,6 @@ class NavbarHandler {
         
         document.body.appendChild(notification);
         
-        // Auto-remove after 5 seconds
         setTimeout(() => {
             if (notification.parentNode) {
                 notification.style.animation = 'slideOutRight 0.3s ease-out';
@@ -587,7 +547,6 @@ class NavbarHandler {
     }
 
     applyGlassEffects() {
-        // Apply glass effects to navigation elements
         const glassElements = document.querySelectorAll('.nav-container, .nav-icon, .user-info, .hamburger-menu');
         glassElements.forEach(element => {
             element.classList.add('glass-effect');
@@ -595,14 +554,13 @@ class NavbarHandler {
     }
 }
 
-// Online Status Checker
 class OnlineStatusChecker {
     constructor() {
         this.statusContainer = document.getElementById('onlineStatus');
         this.statusText = document.getElementById('statusText');
         this.apiStatusText = document.querySelector('.api-status-text');
         this.checkInterval = null;
-        this.checkUrl = 'https://admin.cherrysideloading.xyz/api.js'; // Default URL to check
+        this.checkUrl = 'https://admin.cherrysideloading.xyz/api.js';
         this.init();
     }
 
@@ -610,12 +568,10 @@ class OnlineStatusChecker {
         this.updateStatus('checking', 'Checking connection...');
         this.checkOnlineStatus();
         
-        // Check every 30 seconds
         this.checkInterval = setInterval(() => {
             this.checkOnlineStatus();
         }, 30000);
-        
-        // Also check when page becomes visible
+
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
                 this.checkOnlineStatus();
@@ -628,13 +584,12 @@ class OnlineStatusChecker {
             this.updateStatus('checking', 'Checking connection...');
             
             const response = await fetch(this.checkUrl, {
-                method: 'HEAD', // Use HEAD request to avoid downloading content
-                mode: 'no-cors', // Handle CORS issues
+                method: 'HEAD', 
+                mode: 'no-cors', 
                 cache: 'no-cache',
-                timeout: 5000 // 5 second timeout
+                timeout: 5000 
             });
             
-            // If we get here, the request was successful
             this.updateStatus('online', 'Online');
             
         } catch (error) {
@@ -646,16 +601,12 @@ class OnlineStatusChecker {
     updateStatus(status, text) {
         if (!this.statusContainer || !this.statusText) return;
         
-        // Remove all status classes
         this.statusContainer.classList.remove('online', 'offline', 'checking');
-        
-        // Add new status class
+
         this.statusContainer.classList.add(status);
-        
-        // Update text
+  
         this.statusText.textContent = text;
-        
-        // Update API status text based on status
+
         if (this.apiStatusText) {
             switch (status) {
                 case 'checking':
@@ -671,8 +622,7 @@ class OnlineStatusChecker {
                     this.apiStatusText.textContent = 'API is humming quietly';
             }
         }
-        
-        // Update icon
+
         const icon = this.statusContainer.querySelector('i');
         if (icon) {
             icon.className = 'fas fa-circle';
@@ -681,7 +631,7 @@ class OnlineStatusChecker {
 
     setCheckUrl(url) {
         this.checkUrl = url;
-        this.checkOnlineStatus(); // Immediately check with new URL
+        this.checkOnlineStatus(); 
     }
 
     destroy() {
@@ -692,12 +642,10 @@ class OnlineStatusChecker {
     }
 }
 
-// Initialize controllers when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.orbController = new OrbController();
     window.glassController = new GlassMorphismController();
-    
-    // Add some interactive features
+
     document.addEventListener('keydown', (e) => {
         switch(e.key) {
             case 'ArrowUp':
@@ -715,7 +663,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Refresh glass effects when new elements are added
     const observer = new MutationObserver(() => {
         window.glassController.refreshGlassEffects();
     });
@@ -725,14 +672,11 @@ document.addEventListener('DOMContentLoaded', () => {
         subtree: true
     });
 
-    // Initialize navbar handler
     new NavbarHandler();
 
-    // Initialize online status checker
     new OnlineStatusChecker();
 });
 
-// Export for module usage
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { OrbController, GlassMorphismController };
 } 
