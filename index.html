@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/signer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .main-container {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+
+        .hero-image {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            height: 0;
+            padding-bottom: 50.625%; /* 16:9 aspect ratio (9/16 * 90%) */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 16px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(239, 68, 68, 0.1);
+            margin-top: 20px;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            animation: flickerShadow 3s ease-in-out infinite;
+        }
+
+        @keyframes flickerShadow {
+            0%, 100% {
+                text-shadow: 
+                    0 0 20px var(--shadow),
+                    0 0 40px var(--shadow),
+                    0 0 60px var(--shadow);
+            }
+            25% {
+                text-shadow: 
+                    0 0 10px var(--shadow),
+                    0 0 20px var(--shadow),
+                    0 0 30px var(--shadow);
+            }
+            50% {
+                text-shadow: 
+                    0 0 30px var(--shadow),
+                    0 0 50px var(--shadow),
+                    0 0 70px var(--shadow);
+            }
+            75% {
+                text-shadow: 
+                    0 0 15px var(--shadow),
+                    0 0 25px var(--shadow),
+                    0 0 35px var(--shadow);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            margin-bottom: 2rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--accent);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+        }
+    
+        .bottom-container {
+            width: 90%;
+            max-width: 1200px;
+            height: auto;
+            min-height: 400px;
+            background: rgba(26, 26, 26, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            border-radius: 16px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(239, 68, 68, 0.1);
+            margin-top: 40px;
+            padding: 40px;
+        }
+
+        .bottom-image-container {
+            flex: 1;
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .bottom-image-element {
+            width: 300px;
+            height: 500px;
+            border-radius: 16px;
+            transform: rotateY(45deg);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(239, 68, 68, 0.1);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .bottom-image-element img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .bottom-image-element img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .bottom-content {
+            flex: 1;
+            color: var(--text);
+            padding-left: 40px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bottom-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .bottom-text {
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .content-section {
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(26, 26, 26, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 40px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(239, 68, 68, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .content-image-container {
+            flex: 1;
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .content-image-element {
+            width: 300px;
+            height: 500px;
+            border-radius: 16px;
+            transform: rotateY(-45deg);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(239, 68, 68, 0.1);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .content-image-element img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .content-text-container {
+            flex: 1;
+            padding-left: 40px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content-title {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .content-text {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+
+
+        .hamburger-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1400;
+        }
+
+        .nav-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .hero-image {
+                width: 95%;
+            }
+            
+            .bottom-container {
+                width: 95%;
+            }
+            
+            .content-section {
+                width: 95%;
+            }
+            
+            .bottom-image-element {
+                width: 200px;
+                height: 350px;
+            }
+            
+            .content-image-element {
+                width: 200px;
+                height: 350px;
+            }
+            
+            .cta-button {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-subtitle {
+                max-width: 95%;
+            }
+            
+            .bottom-content {
+                max-width: 90%;
+            }
+            
+            .hero-image {
+                width: 98%;
+            }
+            
+            .bottom-container {
+                width: 98%;
+            }
+            
+            .content-section {
+                width: 98%;
+            }
+            
+            .bottom-image-element {
+                width: 150px;
+                height: 250px;
+            }
+            
+            .content-image-element {
+                width: 150px;
+                height: 250px;
+            }
+            
+            .cta-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        .footer {
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            background: var(--surface);
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-bottom p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <button class="hamburger-menu" id="hamburgerMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="nav-container" id="navContainer">
+            <div class="nav-header">
+                <h2>Navigation</h2>
+                <button class="close-nav" id="closeNav">×</button>
+            </div>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="signer.html">Aurora Signer</a></li>
+                    <li><a href="downloads.html">Downloads</a></li>
+                    <li><a href="documentation.html">Documentation</a></li>
+                </ul>
+                <div class="social-links">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="https://x.com/aurorasigner?s=21" target="_blank" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                            Twitter
+                        </a>
+                        <a href="https://github.com/ViridDevelopment" target="_blank" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            GitHub
+                        </a>
+                        <a href="https://discord.gg/J3Snxpeuxx" target="_blank" class="social-link">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419-.019 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1568 2.4189Z"/>
+                            </svg>
+                            Discord
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <section class="hero-image">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to CSL</h1>
+                <p class="hero-subtitle">The best sideloading solution since 2024</p>
+                <a href="https://download.cherrysideloading.xyz" class="cta-button">havent downloaded yet?</a>
+            </div>
+        </section>
+
+        <section class="bottom-container">
+            <div class="bottom-image-container">
+                <div class="bottom-image-element">
+                    <img src="/images/home.png" alt="Viridium">
+                </div>
+            </div>
+            <div class="bottom-content">
+                <h2 class="bottom-title">Viridium App</h2>
+                <p class="bottom-text">Explore our cutting-edge IPA Repository app, with convenience and incomprehensible features.</p>
+                <a href="#" class="cta-button">Download</a>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="content-text-container">
+                <h2 class="content-title">Why Choose CSL?</h2>
+                <p class="content-text">CSL has multiple IOS sideloading projects which have been crafted in-house to benefit you, we have been around since april 2024 and have 14k regular site visits!</p>
+            </div>
+            <div class="content-image-container">
+                <div class="content-image-element">
+                    <img src="#" alt="idk">
+                </div>
+            </div>
+
+        </section>
+
+        <section class="content-section">
+            <div class="content-image-container">
+                <div class="content-image-element">
+                    <img src="images/server.png" alt="Discord">
+                </div>
+            </div>
+            <div class="content-text-container">
+                <h2 class="content-title">Need more convincing?</h2>
+                <p class="content-text">Did we mention our lightning fast signer system with ipa modification? Join the server today to find out deep the Rabbit hole goes!</p>
+                <a href="https://discord.gg/tqAZcA5PTr" class="cta-button">Get Started</a>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-bottom">
+                <p>&copy; 2025 Cherry Sideloading. All rights reserved.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="general.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageElements = document.querySelectorAll('.bottom-image-element, .content-image-element');
+            
+            function handleScroll() {
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
+                
+                imageElements.forEach((element, index) => {
+                    const rect = element.getBoundingClientRect();
+                    const elementTop = rect.top;
+                    const elementHeight = rect.height;
+                    
+
+                    const visibleRatio = Math.max(0, Math.min(1, 
+                        (windowHeight - elementTop) / (windowHeight + elementHeight)
+                    ));
+                    
+                    const baseRotation = index % 2 === 0 ? 45 : -45;
+                    const scrollRotation = (visibleRatio - 0.5) * 30;
+                    const finalRotation = baseRotation + scrollRotation;
+                    
+                    element.style.transform = `rotateY(${finalRotation}deg)`;
+                });
+            }
+            
+            window.addEventListener('scroll', handleScroll);
+            
+            handleScroll();
+        });
+    </script>
+</body>
+</html>
