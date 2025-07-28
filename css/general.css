@@ -1,24 +1,22 @@
-/* General Styles - Liquid Glass Theme */
-
 :root {
-  --primary: #ef4444;      /* Glowing red */
-  --primary-light: #f87171; /* Light red */
-  --secondary: #3b82f6;    /* Glowing blue */
-  --secondary-light: #60a5fa; /* Light blue */
-  --accent: #ffffff;       /* Pure white */
-  --background: #0a0a0a;   /* Deep black */
-  --background-dark: #000000; /* Pure black */
-  --surface: #1a1a1a;      /* Dark surface */
-  --surface-light: #2a2a2a; /* Lighter surface */
-  --text: #ffffff;        /* Pure white */
-  --text-light: #e5e5e5;  /* Light gray */
-  --text-muted: #a3a3a3;  /* Muted gray */
-  --border: #333333;      /* Dark border */
-  --shadow: rgba(239, 68, 68, 0.2); /* Red glow shadow */
-  --shadow-dark: rgba(59, 130, 246, 0.3); /* Blue glow shadow */
-  --success: #10b981;     /* Green */
-  --warning: #f59e0b;     /* Amber */
-  --error: #ef4444;       /* Red */
+  --primary: #ef4444;     
+  --primary-light: #f87171; 
+  --secondary: #3b82f6;    
+  --secondary-light: #60a5fa; 
+  --accent: #ffffff;       
+  --background: #0a0a0a;   
+  --background-dark: #000000; 
+  --surface: #1a1a1a;      
+  --surface-light: #2a2a2a; 
+  --text: #ffffff;        
+  --text-light: #e5e5e5;  
+  --text-muted: #a3a3a3; 
+  --border: #333333;      
+  --shadow: rgba(239, 68, 68, 0.2); 
+  --shadow-dark: rgba(59, 130, 246, 0.3);
+  --success: #10b981;     
+  --warning: #f59e0b;   
+  --error: #ef4444;     
 }
 
 * {
@@ -37,21 +35,18 @@ body {
   position: relative;
 }
 
-/* Ensure all text uses Inter font by default */
 * {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Override for specific buttons that should not use Inter */
 button[type="submit (alpha)"],
 .install-link,
 .copy-link-btn,
 .save-btn,
 .cancel-btn {
-  font-family: inherit; /* Keep their existing font */
+  font-family: inherit; 
 }
 
-/* Page Wrapper */
 .page-wrapper {
   position: relative;
   min-height: 100vh;
@@ -59,7 +54,6 @@ button[type="submit (alpha)"],
   flex-direction: column;
 }
 
-/* Navigation */
 .hamburger-menu {
   position: fixed;
   top: 20px;
@@ -202,7 +196,6 @@ button[type="submit (alpha)"],
   transform: translateX(4px);
 }
 
-/* Social Links */
 .social-links {
   padding: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -277,7 +270,6 @@ button[type="submit (alpha)"],
   transform: scale(1.1);
 }
 
-/* Nav Icons */
 .nav-icon {
   position: fixed;
   top: 20px;
@@ -319,7 +311,6 @@ button[type="submit (alpha)"],
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Generic Buttons */
 .generic-button {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
   color: var(--accent);
@@ -353,7 +344,6 @@ button[type="submit (alpha)"],
   box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
 }
 
-/* Generic Inputs */
 .generic-input {
   width: 100%;
   padding: 12px 16px;
@@ -378,7 +368,6 @@ button[type="submit (alpha)"],
   color: var(--text-muted);
 }
 
-/* Generic Containers */
 .generic-container {
   background: rgba(26, 26, 26, 0.4);
   backdrop-filter: blur(20px);
@@ -391,7 +380,6 @@ button[type="submit (alpha)"],
     0 0 20px rgba(239, 68, 68, 0.1);
 }
 
-/* Utility Classes */
 .hidden {
   display: none !important;
 }
@@ -406,7 +394,6 @@ button[type="submit (alpha)"],
     0 0 20px rgba(239, 68, 68, 0.1);
 }
 
-/* Dev Button */
 .dev-button {
   background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
   color: var(--accent);
@@ -439,7 +426,6 @@ button[type="submit (alpha)"],
   transform: translateY(0);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .nav-container {
     width: 280px;
@@ -472,7 +458,6 @@ button[type="submit (alpha)"],
   }
 } 
 
-/* Online Status */
 .online-status {
   position: static;
   margin-bottom: 20px;
