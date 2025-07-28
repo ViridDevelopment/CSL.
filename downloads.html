@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Main Container */
         .main-container {
             width: 100%;
             min-height: 100vh;
@@ -20,7 +19,6 @@
             padding-bottom: 100px;
         }
 
-        /* Page Header */
         .page-header {
             text-align: center;
             margin-bottom: 40px;
@@ -44,14 +42,12 @@
             margin: 0 auto;
         }
 
-        /* Carousel Container */
         .carousel-section {
             width: 90%;
             max-width: 1200px;
             margin-bottom: 60px;
         }
 
-        /* Unified light-to-dark red gradient theme for all carousels */
         .carousel-title::after {
             background: linear-gradient(90deg, var(--primary-light), var(--primary));
             box-shadow: 0 0 10px var(--shadow);
@@ -91,7 +87,6 @@
             box-shadow: 0 0 10px var(--shadow);
         }
 
-        /* Carousel Container */
         .carousel-container {
             background: rgba(26, 26, 26, 0.4);
             backdrop-filter: blur(20px);
@@ -104,7 +99,6 @@
                 0 0 20px var(--shadow);
         }
 
-        /* Carousel Track */
         .carousel-track {
             display: flex;
             gap: 20px;
@@ -119,7 +113,6 @@
             display: none;
         }
 
-        /* Download Item */
         .download-item {
             min-width: 280px;
             background: rgba(42, 42, 42, 0.6);
@@ -203,7 +196,6 @@
             gap: 5px;
         }
 
-        /* Navigation Buttons */
         .carousel-nav {
             display: flex;
             justify-content: center;
@@ -232,7 +224,6 @@
             box-shadow: 0 0 10px var(--shadow);
         }
 
-        /* Unified navigation button theme */
         .nav-btn:hover {
             background: linear-gradient(135deg, var(--shadow), rgba(255, 255, 255, 0.1));
             border-color: var(--primary);
@@ -245,7 +236,6 @@
             transform: none;
         }
 
-        /* Link Buttons Grid */
         .link-buttons-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -327,7 +317,6 @@
             margin: 0;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .carousel-container {
                 padding: 20px;
@@ -368,7 +357,6 @@
             }
         }
 
-        /* Loading Animation */
         .loading {
             display: flex;
             justify-content: center;
@@ -381,7 +369,6 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 40px;
@@ -397,14 +384,12 @@
 </head>
 <body>
     <div class="page-wrapper">
-        <!-- Hamburger -->
         <button class="hamburger-menu" id="hamburgerMenu">
             <span></span>
             <span></span>
             <span></span>
         </button>
 
-        <!-- Navigation Container -->
         <div class="nav-container" id="navContainer">
             <div class="nav-header">
                 <h2>Navigation</h2>
@@ -443,9 +428,7 @@
             </nav>
         </div>
 
-        <!-- Main Content -->
         <main class="main-container">
-            <!-- Page Header -->
             <div class="page-header">
                 <h1 class="page-title">Resources</h1>
                 <p class="page-subtitle">Effortlessly glide through CSL's vast amount of resources</p>
@@ -509,7 +492,6 @@
                 </div>
             </div>
 
-            <!-- Link Buttons Container -->
             <div class="carousel-section">
                 <h2 class="carousel-title">Quick Links</h2>
                 <div class="carousel-container">
@@ -541,7 +523,6 @@
 
     <script src="general.js"></script>
     <script>
-        // Carousel scrolling functionality
         function scrollCarousel(trackId, direction) {
             const track = document.getElementById(trackId);
             track.scrollBy({
@@ -550,18 +531,15 @@
             });
         }
 
-        // Add click handlers for download items
         document.addEventListener('DOMContentLoaded', function() {
             const downloadItems = document.querySelectorAll('.download-item:not(a)');
             
             downloadItems.forEach(item => {
                 item.addEventListener('click', function() {
-                    // Add download functionality here
                     const title = this.querySelector('.download-title').textContent;
                     console.log(`Downloading: ${title}`);
-                    
-                    // You can add actual download logic here
-                    // For now, we'll just show a visual feedback
+                    // i really cba to do this part but if u wanna try no problem
+                    // its like the download page shet lol
                     this.style.transform = 'scale(0.95)';
                     setTimeout(() => {
                         this.style.transform = '';
