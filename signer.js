@@ -463,16 +463,20 @@ if (data.success) {
             const devButton = document.getElementById('devButton');
             if (currentUser.isDev && devButton) {
                 devButton.classList.remove("hidden");
-                devButton.addEventListener('click', toggleAdminPanel);
+                devButton.onclick = toggleAdminPanel;
             } else if (devButton) {
                 devButton.classList.add("hidden");
+                devButton.onclick = null;
             }
         } else {
             if (signInButton) signInButton.innerHTML = '<i class="fas fa-sign-in-alt"></i>';
             if (userInfo) userInfo.classList.add("hidden");
             if (usernameDisplay) usernameDisplay.textContent = "";
             const devButton = document.getElementById('devButton');
-            if (devButton) devButton.classList.add("hidden");
+            if (devButton) {
+                devButton.classList.add("hidden");
+                devButton.onclick = null;
+            }
             linkDurationInfo.textContent = '';
         }
         // Dispatch a custom event when login status changes
@@ -543,14 +547,6 @@ if (data.success) {
     // Call this function when the page loads
     document.addEventListener('DOMContentLoaded', checkAdminPanel);
 
-    document.getElementById('devButton').addEventListener('click', () => {
-        const adminPanel = document.getElementById('adminPanel');
-        adminPanel.style.display = adminPanel.style.display === 'none' ? 'block' : 'none';
-        if (adminPanel.style.display === 'block') {
-            loadUsers();
-        }
-    });
-
     checkLoginStatus();
 
     document.querySelectorAll(".close").forEach((closeButton) => {
@@ -617,15 +613,15 @@ if (data.success) {
             if (user.isDev) {
                 usernameDisplay.innerHTML += ' <span class="dev-badge">DEV</span>';
                 devButton.classList.remove('hidden');
-                devButton.addEventListener('click', toggleAdminPanel);
+                devButton.onclick = toggleAdminPanel;
             } else {
                 devButton.classList.add('hidden');
-                devButton.removeEventListener('click', toggleAdminPanel);
+                devButton.onclick = null;
             }
         } else {
             userInfo.classList.add('hidden');
             devButton.classList.add('hidden');
-            devButton.removeEventListener('click', toggleAdminPanel);
+            devButton.onclick = null;
             linkDurationInfo.textContent = '';
         }
     }
