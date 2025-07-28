@@ -25,7 +25,7 @@
             width: 90%;
             max-width: 1200px;
             height: 0;
-            padding-bottom: 50.625%;
+            padding-bottom: 50.625%; /* 16:9 aspect ratio (9/16 * 90%) */
             background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80');
             background-size: cover;
             background-position: center;
@@ -124,7 +124,9 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
             align-items: center;
             border-radius: 16px;
             box-shadow: 
@@ -142,6 +144,7 @@
             align-items: center;
             justify-content: center;
             perspective: 1000px;
+            overflow: visible;
         }
 
         .bottom-image-element {
@@ -155,6 +158,10 @@
             overflow: hidden;
             position: relative;
             transition: transform 0.3s ease;
+            /* Allow the rotated element to overflow its container */
+            transform-origin: center center;
+            /* Preserve rounded corners */
+            border-radius: 16px;
         }
 
         .bottom-image-element img {
@@ -165,13 +172,6 @@
             position: absolute;
             top: 0;
             left: 0;
-        }
-
-        .bottom-image-element img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
         }
 
         .bottom-content {
@@ -212,7 +212,9 @@
             box-shadow: 
                 0 8px 32px rgba(0, 0, 0, 0.3),
                 0 0 20px rgba(239, 68, 68, 0.1);
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
             align-items: center;
         }
 
@@ -224,6 +226,7 @@
             align-items: center;
             justify-content: center;
             perspective: 1000px;
+            overflow: visible;
         }
 
         .content-image-element {
@@ -237,6 +240,10 @@
             overflow: hidden;
             position: relative;
             transition: transform 0.3s ease;
+            /* Allow the rotated element to overflow its container */
+            transform-origin: center center;
+            /* Preserve rounded corners */
+            border-radius: 16px;
         }
 
         .content-image-element img {
@@ -296,20 +303,48 @@
             
             .bottom-container {
                 width: 95%;
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px 20px;
             }
             
             .content-section {
                 width: 95%;
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px 20px;
             }
             
             .bottom-image-element {
                 width: 200px;
                 height: 350px;
+                /* Allow more dramatic rotation on mobile for overflow effect */
+                transform: rotateY(35deg);
+                border-radius: 16px;
             }
             
             .content-image-element {
                 width: 200px;
                 height: 350px;
+                /* Allow more dramatic rotation on mobile for overflow effect */
+                transform: rotateY(-35deg);
+                border-radius: 16px;
+            }
+            
+            .bottom-image-container,
+            .content-image-container {
+                height: 350px;
+                overflow: visible;
+            }
+            
+            .bottom-content {
+                padding-left: 0;
+                text-align: center;
+            }
+            
+            .content-text-container {
+                padding-left: 0;
+                text-align: center;
             }
             
             .cta-button {
@@ -333,20 +368,46 @@
             
             .bottom-container {
                 width: 98%;
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px 15px;
             }
             
             .content-section {
                 width: 98%;
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px 15px;
             }
             
             .bottom-image-element {
                 width: 150px;
                 height: 250px;
+                /* Allow dramatic rotation on small mobile devices for overflow effect */
+                transform: rotateY(30deg);
+                border-radius: 16px;
             }
             
             .content-image-element {
                 width: 150px;
                 height: 250px;
+                /* Allow dramatic rotation on small mobile devices for overflow effect */
+                transform: rotateY(-30deg);
+                border-radius: 16px;
+            }
+            
+            .bottom-image-container,
+            .content-image-container {
+                height: 300px;
+                overflow: visible;
+            }
+            
+            .bottom-content {
+                padding-top: 20px;
+            }
+            
+            .content-text-container {
+                padding-top: 20px;
             }
             
             .cta-button {
@@ -435,13 +496,13 @@
         <section class="bottom-container">
             <div class="bottom-image-container">
                 <div class="bottom-image-element">
-                    <img src="images/home.png" alt="Viridium">
+                    <img src="/images/home.png" alt="Viridium">
                 </div>
             </div>
             <div class="bottom-content">
                 <h2 class="bottom-title">Viridium App</h2>
                 <p class="bottom-text">Explore our cutting-edge IPA Repository app, with convenience and incomprehensible features.</p>
-                <a href="files/Viridium.ipa" class="cta-button">Download</a>
+                <a href="images/home.png" class="cta-button">Download</a>
             </div>
         </section>
 
@@ -452,7 +513,7 @@
             </div>
             <div class="content-image-container">
                 <div class="content-image-element">
-                    <img src="images/siteshot.png" alt="cold">
+                    <img src="images/servershot" alt="idk">
                 </div>
             </div>
 
@@ -487,19 +548,29 @@
             function handleScroll() {
                 const scrollY = window.scrollY;
                 const windowHeight = window.innerHeight;
+                const isMobile = window.innerWidth <= 768;
+                const isSmallMobile = window.innerWidth <= 480;
                 
                 imageElements.forEach((element, index) => {
                     const rect = element.getBoundingClientRect();
                     const elementTop = rect.top;
                     const elementHeight = rect.height;
                     
-
                     const visibleRatio = Math.max(0, Math.min(1, 
                         (windowHeight - elementTop) / (windowHeight + elementHeight)
                     ));
                     
-                    const baseRotation = index % 2 === 0 ? 45 : -45;
-                    const scrollRotation = (visibleRatio - 0.5) * 30;
+                    // Adjust base rotation based on screen size
+                    let baseRotation;
+                    if (isSmallMobile) {
+                        baseRotation = index % 2 === 0 ? 30 : -30;
+                    } else if (isMobile) {
+                        baseRotation = index % 2 === 0 ? 35 : -35;
+                    } else {
+                        baseRotation = index % 2 === 0 ? 45 : -45;
+                    }
+                    
+                    const scrollRotation = (visibleRatio - 0.5) * 20; // Reduced scroll effect on mobile
                     const finalRotation = baseRotation + scrollRotation;
                     
                     element.style.transform = `rotateY(${finalRotation}deg)`;
@@ -507,6 +578,7 @@
             }
             
             window.addEventListener('scroll', handleScroll);
+            window.addEventListener('resize', handleScroll);
             
             handleScroll();
         });
