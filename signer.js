@@ -463,7 +463,7 @@ if (data.success) {
             const devButton = document.getElementById('devButton');
             if (currentUser.isDev && devButton) {
                 devButton.classList.remove("hidden");
-                devButton.onclick = toggleAdminPanel;
+                devButton.addEventListener('click', toggleAdminPanel);
             } else if (devButton) {
                 devButton.classList.add("hidden");
                 devButton.onclick = null;
