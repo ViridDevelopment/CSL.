@@ -69,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Logging user and file info
         console.log("Signing request initiated by user:", currentUser.username);
         const ipaFile = document.getElementById('ipa').files[0];
         console.log("File selected for signing:", ipaFile ? ipaFile.name : "No file selected");
@@ -81,7 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Cyan: Validate .cyan file type if provided
         const cyanConfigInput = document.getElementById('cyanConfig');
         if (cyanConfigInput && cyanConfigInput.files.length > 0) {
             const cyanFile = cyanConfigInput.files[0];
@@ -92,64 +90,54 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        // Build cyan flags from modifications
         let cyanFlags = [];
-        
-        // Bundle ID modification
+
         const modifyBundleId = document.getElementById('modifyBundleId');
         const newBundleId = document.getElementById('newBundleId');
         if (modifyBundleId && modifyBundleId.checked && newBundleId && newBundleId.value.trim()) {
             cyanFlags.push(`-b "${newBundleId.value.trim()}"`);
         }
-        
-        // App Name modification
+
         const modifyAppName = document.getElementById('modifyAppName');
         const newAppName = document.getElementById('newAppName');
         if (modifyAppName && modifyAppName.checked && newAppName && newAppName.value.trim()) {
             cyanFlags.push(`-n "${newAppName.value.trim()}"`);
         }
-        
-        // Version modification
+
         const modifyVersion = document.getElementById('modifyVersion');
         const newVersion = document.getElementById('newVersion');
         if (modifyVersion && modifyVersion.checked && newVersion && newVersion.value.trim()) {
             cyanFlags.push(`-v "${newVersion.value.trim()}"`);
         }
-        
-        // Minimum OS modification
+  
         const modifyMinOS = document.getElementById('modifyMinOS');
         const newMinOS = document.getElementById('newMinOS');
         if (modifyMinOS && modifyMinOS.checked && newMinOS && newMinOS.value.trim()) {
             cyanFlags.push(`-m "${newMinOS.value.trim()}"`);
         }
-        
-        // Inject Dylib
+
         const injectDylib = document.getElementById('injectDylib');
         const dylibFile = document.getElementById('dylibFile');
         if (injectDylib && injectDylib.checked && dylibFile && dylibFile.files.length > 0) {
             cyanFlags.push(`-z "${dylibFile.files[0].name}"`);
         }
-        
-        // Inject Deb
+
         const injectDeb = document.getElementById('injectDeb');
         const debFile = document.getElementById('debFile');
         if (injectDeb && injectDeb.checked && debFile && debFile.files.length > 0) {
             cyanFlags.push(`-f "${debFile.files[0].name}"`);
         }
-        
-        // Remove Watch App
+
         const removeWatchApp = document.getElementById('removeWatchApp');
         if (removeWatchApp && removeWatchApp.checked) {
             cyanFlags.push('-u');
         }
-        
-        // Remove App Extensions
+
         const removeAppExtensions = document.getElementById('removeAppExtensions');
         if (removeAppExtensions && removeAppExtensions.checked) {
             cyanFlags.push('-w');
         }
-        
-        // Thin to ARM64
+ 
         const thinARM64 = document.getElementById('thinARM64');
         if (thinARM64 && thinARM64.checked) {
             cyanFlags.push('-s');
@@ -163,20 +151,17 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append("expiryDays", currentUser.premium ? "120" : "30");
         formData.append("username", currentUser.username);
 
-        // Cyan: Add cyanConfig file and cyanFlags to FormData if present
         if (cyanConfigInput && cyanConfigInput.files.length > 0) {
             formData.append('cyanConfig', cyanConfigInput.files[0]);
         }
-        
-        // Add modification files to FormData
+
         if (dylibFile && dylibFile.files.length > 0) {
             formData.append('dylibFile', dylibFile.files[0]);
         }
         if (debFile && debFile.files.length > 0) {
             formData.append('debFile', debFile.files[0]);
         }
-        
-        // Add cyan flags if any modifications are selected
+
         if (cyanFlags.length > 0) {
             formData.append('cyanFlags', cyanFlags.join(' '));
         }
@@ -230,7 +215,6 @@ function handleSigningSuccess(data) {
         installLink.target = "_blank";
         resultDiv.appendChild(installLink);
 
-        // Copy Link Button
         const copyBtn = document.createElement("button");
         copyBtn.className = "copy-link-btn";
         copyBtn.textContent = "Copy Link";
@@ -280,19 +264,16 @@ function handleRegistrationError(error) {
 
     loader.classList.add("hidden");
 
-    // If error.response exists and it's a validation error (status 400)
     if (error.response && error.response.status === 400) {
         error.response.json().then((data) => {
             const errorMessage = data.error || "An error occurred. Please try again.";
             resultDiv.textContent = `Error: ${errorMessage}`;
             showNotification(errorMessage, "error");
         }).catch(() => {
-            // In case parsing the error message fails
             resultDiv.textContent = "Error: Failed to register. Please contact support.";
             showNotification("Failed to register. Please contact support.", "error");
         });
     } else {
-        // For any other kind of error (e.g., network error or unexpected server error)
         resultDiv.textContent = "Error: Internal server error. Please try again later.";
         showNotification("Internal server error", "error");
     }
@@ -339,7 +320,6 @@ function handleRegistrationError(error) {
         signInButton.addEventListener("click", (e) => {
             e.preventDefault();
             if (currentUser) {
-                // Show sign-out confirmation
                 if (confirm("Are you sure you want to sign out?")) {
                     currentUser = null;
                     localStorage.removeItem('currentUser');
@@ -399,7 +379,6 @@ function handleRegistrationError(error) {
                 const success = await registerUser(username, password);
                 if (success) {
                     showNotification("Account created successfully! You can now log in.", "success");
-                    // The UI is already updated in the registerUser function
                 }
             }
         });
@@ -417,21 +396,19 @@ function handleRegistrationError(error) {
 console.log(data);
 if (data.success) {
     showNotification('Registration successful. You can now log in.', 'success');
-    // Automatically switch to login mode after successful signup
     isLoginMode = true;
     authTitle.textContent = "Login";
     authSubmit.textContent = "Login";
     authToggle.innerHTML = 'Don\'t have an account? <a href="#">Sign Up</a>';
     privacyPolicyAgreement.style.display = "none";
     agreePrivacyPolicyCheckbox.required = false;
-    
-    // Clear the form fields for login
+
     document.getElementById("auth-username").value = "";
     document.getElementById("auth-password").value = "";
     
     return true;
 } else {
-    console.error('Registration failed:', data); // Logs the full error details
+    console.error('Registration failed:', data); 
     showNotification(data.error || 'Registration failed. Please try again.', 'error');
     return false;
 }
@@ -479,7 +456,6 @@ if (data.success) {
             }
             linkDurationInfo.textContent = '';
         }
-        // Dispatch a custom event when login status changes
         document.dispatchEvent(new Event('loginStatusChanged'));
         updateMaxFileSize();
     }
@@ -496,12 +472,12 @@ if (data.success) {
         
         if (!adminPanel.classList.contains('hidden')) {
             console.log('Admin panel should be visible now');
-            adminPanel.style.display = 'block'; // Force display
+            adminPanel.style.display = 'block'; 
             loadUsers();
             addCloseButtonToAdminPanel();
         } else {
             console.log('Admin panel should be hidden now');
-            adminPanel.style.display = 'none'; // Force hide
+            adminPanel.style.display = 'none'; 
         }
     }
 
@@ -544,7 +520,6 @@ if (data.success) {
         }
     }
 
-    // Call this function when the page loads
     document.addEventListener('DOMContentLoaded', checkAdminPanel);
 
     checkLoginStatus();
@@ -837,7 +812,6 @@ if (data.success) {
     }
 
     function editUser(userId) {
-        // Create edit modal
         const editModal = document.createElement('div');
         editModal.className = 'edit-modal';
         editModal.innerHTML = `
@@ -871,7 +845,6 @@ if (data.success) {
         `;
         document.body.appendChild(editModal);
 
-        // Handle form submission
         document.getElementById('editUserForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const updateData = {
@@ -903,7 +876,7 @@ if (data.success) {
                 if (data.success) {
                     showNotification('User updated successfully!', 'success');
                     closeEditModal();
-                    loadUsers(); // Reload the user list
+                    loadUsers(); 
                 } else {
                     showNotification('Failed to update user: ' + (data.error || 'Unknown error'), 'error');
                 }
@@ -939,7 +912,7 @@ if (data.success) {
             .then(data => {
                 if (data.success) {
                     showNotification('User deleted successfully!', 'success');
-                    loadUsers(); // Reload the user list
+                    loadUsers(); 
                 } else {
                     showNotification('Failed to delete user: ' + (data.error || 'Unknown error'), 'error');
                 }
@@ -951,7 +924,6 @@ if (data.success) {
         }
     }
 
-    // Search functionality
     const adminSearchInput = document.getElementById('adminUserSearch');
     if (adminSearchInput) {
         adminSearchInput.addEventListener('input', function() {
