@@ -1,14 +1,12 @@
-
-
 class OrbController {
     constructor() {
         this.orbs = [];
         this.maxOrbs = 12;
         this.orbTypes = [
             { color: '#ef4444', size: 300, speed: 0.5 },
-            { color: '#3b82f6', size: 400, speed: 0.3 }, 
-            { color: '#ef4444', size: 350, speed: 0.4 }, 
-            { color: '#3b82f6', size: 450, speed: 0.2 }  
+            { color: '#3b82f6', size: 400, speed: 0.3 },
+            { color: '#ef4444', size: 350, speed: 0.4 },
+            { color: '#3b82f6', size: 450, speed: 0.2 }
         ];
         this.init();
     }
@@ -56,7 +54,7 @@ class OrbController {
         `;
 
         this.setRandomPosition(orb);
-
+        
         this.orbs.push({
             element: orb,
             type: type,
@@ -81,7 +79,6 @@ class OrbController {
 
     animate() {
         this.orbs.forEach((orb, index) => {
-
             orb.x += orb.vx;
             orb.y += orb.vy;
 
@@ -112,16 +109,16 @@ class OrbController {
     recreateOrb(index) {
         const orb = this.orbs[index];
         const type = this.orbTypes[index % this.orbTypes.length];
-
+        
         orb.life = orb.maxLife;
         orb.dissipateRate = 0.001 + Math.random() * 0.002;
         orb.vx = (Math.random() - 0.5) * type.speed;
         orb.vy = (Math.random() - 0.5) * type.speed;
-
+        
         this.setRandomPosition(orb.element);
         orb.x = parseFloat(orb.element.style.left);
         orb.y = parseFloat(orb.element.style.top);
-
+        
         orb.element.style.opacity = 0.3;
         orb.element.style.transform = 'translate(0px, 0px) scale(1)';
     }
@@ -336,18 +333,21 @@ class NavbarHandler {
     }
 
     setupEventListeners() {
+        // Hamburger menu toggle
         if (this.hamburgerMenu) {
             this.hamburgerMenu.addEventListener('click', () => {
                 this.toggleNav();
             });
         }
 
+        // Close nav button
         if (this.closeNav) {
             this.closeNav.addEventListener('click', () => {
                 this.closeNavigation();
             });
         }
 
+        // Close nav when clicking outside
         document.addEventListener('click', (e) => {
             if (this.navContainer && this.navContainer.classList.contains('open')) {
                 if (!this.navContainer.contains(e.target) && !this.hamburgerMenu.contains(e.target)) {
@@ -356,6 +356,7 @@ class NavbarHandler {
             }
         });
 
+        // Close nav on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.navContainer && this.navContainer.classList.contains('open')) {
                 this.closeNavigation();
@@ -392,7 +393,7 @@ class NavbarHandler {
     toggleNav() {
         if (this.navContainer) {
             this.navContainer.classList.toggle('open');
-
+            
             if (this.hamburgerMenu) {
                 const spans = this.hamburgerMenu.querySelectorAll('span');
                 if (this.navContainer.classList.contains('open')) {
@@ -411,18 +412,27 @@ class NavbarHandler {
     closeNavigation() {
         if (this.navContainer) {
             this.navContainer.classList.remove('open');
-
-            if (this.hamburgerMenu) {
-                const spans = this.hamburgerMenu.querySelectorAll('span');
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            }
+            
+                    if (this.hamburgerMenu) {
+            const spans = this.hamburgerMenu.querySelectorAll('span');
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+        }
         }
     }
 
     checkUserStatus() {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        
+        if (window.location.pathname.includes('signer.html')) {
+            if (currentUser && currentUser.isDev && this.devPanelButton) {
+                this.devPanelButton.classList.remove('hidden');
+            } else if (this.devPanelButton) {
+                this.devPanelButton.classList.add('hidden');
+            }
+            return;
+        }
         
         if (currentUser) {
             this.showUserInfo(currentUser);
@@ -432,7 +442,9 @@ class NavbarHandler {
     }
 
     showUserInfo(user) {
-        if (this.signInButton) this.signInButton.classList.add('hidden');
+        if (this.signInButton && !window.location.pathname.includes('signer.html')) {
+            this.signInButton.classList.add('hidden');
+        }
         if (this.userInfo) {
             this.userInfo.classList.remove('hidden');
             const usernameDisplay = this.userInfo.querySelector('#username-display');
@@ -446,7 +458,7 @@ class NavbarHandler {
                 }
             }
         }
- 
+        
         if (user.isDev && this.devPanelButton) {
             this.devPanelButton.classList.remove('hidden');
         }
@@ -498,7 +510,6 @@ class NavbarHandler {
     }
 
     showNotification(message, type = 'info') {
-
         const existingNotifications = document.querySelectorAll('.notifications-popup');
         existingNotifications.forEach(notification => notification.remove());
 
@@ -571,7 +582,7 @@ class OnlineStatusChecker {
         this.checkInterval = setInterval(() => {
             this.checkOnlineStatus();
         }, 30000);
-
+        
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
                 this.checkOnlineStatus();
@@ -584,12 +595,13 @@ class OnlineStatusChecker {
             this.updateStatus('checking', 'Checking connection...');
             
             const response = await fetch(this.checkUrl, {
-                method: 'HEAD', 
-                mode: 'no-cors', 
+                method: 'HEAD', // Use HEAD request to avoid downloading content
+                mode: 'no-cors', // Handle CORS issues
                 cache: 'no-cache',
-                timeout: 5000 
+                timeout: 5000 // 5 second timeout
             });
             
+            // If we get here, the request was successful
             this.updateStatus('online', 'Online');
             
         } catch (error) {
@@ -601,12 +613,16 @@ class OnlineStatusChecker {
     updateStatus(status, text) {
         if (!this.statusContainer || !this.statusText) return;
         
+        // Remove all status classes
         this.statusContainer.classList.remove('online', 'offline', 'checking');
-
+        
+        // Add new status class
         this.statusContainer.classList.add(status);
-  
+        
+        // Update text
         this.statusText.textContent = text;
-
+        
+        // Update API status text based on status
         if (this.apiStatusText) {
             switch (status) {
                 case 'checking':
@@ -622,7 +638,8 @@ class OnlineStatusChecker {
                     this.apiStatusText.textContent = 'API is humming quietly';
             }
         }
-
+        
+        // Update icon
         const icon = this.statusContainer.querySelector('i');
         if (icon) {
             icon.className = 'fas fa-circle';
@@ -631,7 +648,7 @@ class OnlineStatusChecker {
 
     setCheckUrl(url) {
         this.checkUrl = url;
-        this.checkOnlineStatus(); 
+        this.checkOnlineStatus(); // Immediately check with new URL
     }
 
     destroy() {
@@ -642,10 +659,12 @@ class OnlineStatusChecker {
     }
 }
 
+// Initialize controllers when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.orbController = new OrbController();
     window.glassController = new GlassMorphismController();
-
+    
+    // Add some interactive features
     document.addEventListener('keydown', (e) => {
         switch(e.key) {
             case 'ArrowUp':
@@ -663,6 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Refresh glass effects when new elements are added
     const observer = new MutationObserver(() => {
         window.glassController.refreshGlassEffects();
     });
@@ -672,11 +692,14 @@ document.addEventListener('DOMContentLoaded', () => {
         subtree: true
     });
 
+    // Initialize navbar handler
     new NavbarHandler();
 
+    // Initialize online status checker
     new OnlineStatusChecker();
 });
 
+// Export for module usage
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { OrbController, GlassMorphismController };
 } 
