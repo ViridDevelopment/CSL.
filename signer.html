@@ -4,8 +4,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>Aurora Signer</title>
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/signer.css">
+        <link rel="stylesheet" href="/CSS/general.css">
+        <link rel="stylesheet" href="/CSS/signer.css">
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -17,6 +17,7 @@
     <body>
 
         <div class="page-wrapper">
+          <!-- Hamburger -->
           <button class="hamburger-menu" id="hamburgerMenu">
             <span></span>
             <span></span>
@@ -70,7 +71,7 @@
               ><i class="fas fa-sign-in-alt"></i
           ></a>
           <span id="userInfo" class="user-info">
-              <i class="fas fa-user"></i></i>
+              <i class="fas fa-user">MILDEROUS</i>
               <span id="username-display"></span>
           </span>
           <a href="#" class="nav-icon hidden" id="devPanelButton"><i class="fas fa-cogs"></i></a>
@@ -164,6 +165,7 @@
                   <p>Your signed IPA file will appear here after processing</p>
                 </div>
                 
+                <!-- Online Status Container -->
                 <div id="onlineStatus" class="online-status">
                     <i class="fas fa-circle"></i>
                     <span id="statusText">Checking...</span>
@@ -338,7 +340,9 @@
         </div>
 
         <script src="database.js?v=<?php echo time(); ?>"></script>
+        <script src="signing.js"></script>
         <script src="signer.js"></script>
+        <script src="script.js"></script>
         <script src="admin.js?v=<?php echo time(); ?>"></script>
         <script src="general.js"></script>
     </body>
